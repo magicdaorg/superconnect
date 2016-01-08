@@ -107,11 +107,12 @@ fieldset {border-radius: 4px}
 .m-list .img-wrap {
     display: inline-block;
     height: 49px;
-    margin-right: 10px;
+    margin-right: 5px;
+    margin-left: 5px;
     overflow: hidden;
     width: 49px;
     float: left;
-    padding-left:0.8em
+    /*padding-left:0.8em*/
 }
 .m-list img {
     background-clip: padding-box;
