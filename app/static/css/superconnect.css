@@ -31,6 +31,7 @@ fieldset {border-radius: 4px}
 .header h1 {margin: 0px 0px;font-size:1.3em;display:inline} 
 .header-fixed {position:fixed;width:100%;top:0em;} 
 
+
 /*** footer ***/ 
 .footer ul {position:fixed;bottom:0;width:100%;margin:0;text-align:center;border-top:2px solid red;background-color:#fff;} 
 .footer ul li {width:25%;float:left;padding-bottom:1em;font-size:1em} 
