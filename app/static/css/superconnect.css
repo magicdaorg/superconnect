@@ -101,10 +101,10 @@ fieldset {border-radius: 4px}
 .m-list li .add-friend{width: 20%;float:right;text-align:center;line-height:1.5em;margin-right:0.8em;} 
 .m-list li .add-friend a {width: 100%;background-color: red;color:#fff;padding: 0 2% 0 2%}
 .m-list li .add-friend p {color:gray;font-size:0.8rem} 
-/*.m-list img {width: 100%;border-radius: 4px;}
-.m-list .img-wrap { width: 18%;float: left;padding-left:0.8em}*/
-.m-list img {height: 49px;width: 49px;border-radius: 24.5px;}
-.m-list .img-wrap { height: 49px;width: 49px;float: left;padding-left:0.8em}
+.m-list img {width: 100%;border-radius: 4px;}
+.m-list .img-wrap { width: 18%;float: left;padding-left:0.8em}
+/*.m-list img {height: 49px;width: 49px;border-radius: 24.5px;}
+.m-list .img-wrap { height: 49px;width: 49px;float: left;padding-left:0.8em}*/
 .m-list .u-info {float: left; width: 55%; padding-left:0.5rem;}
 .m-list .u-info span{color:gray} 
 .m-list .u-info .desc{font-size: 0.8rem;color: gray} 
