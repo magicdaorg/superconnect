@@ -26,8 +26,8 @@ fieldset {border-radius: 4px}
 
 /*** header ***/ 
 .header {line-height:2.5rem;background-color:#F96D4A;color:#fff;text-align: center;}
-.header-left {float:left;position:absolute;left:2px;width:4rem;color:#fff}
-.header-right {float:right;display:inline;position:absolute;color:#fff;right:2px;width:4rem;}
+.header-left {float:left;position:absolute;left:1rem;width:4rem;color:#fff}
+.header-right {float:right;display:inline;position:absolute;color:#fff;right:1rem;width:4rem;}
 .header h1 {margin: 0px 0px;font-size:1.3em;display:inline} 
 .header-fixed {position:fixed;width:100%;top:0em;} 
 
