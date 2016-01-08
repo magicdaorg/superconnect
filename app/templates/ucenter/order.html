@@ -1,0 +1,34 @@
+{% extends 'page.html' %} 
+{% block page_content %} 
+<div class="header">
+   <a href="javascript:window.history.go(-1)"><span class="header-left">返回</span></a> 
+   <h1>我的订单</h1>
+   <a href="{{url_for('promotion.qrcode', uid=g.user.id)}}"><span class="header-right">二维码>>></span></a> 
+</div>
+<div class="ucenter-order">
+    <ul> 
+    {% for i in g.orders %} 
+    <a href="{{url_for('shop.order', order_id=i.id)}}">
+    <li class="order">
+        <ul>
+            <li>订单编号: {{i.pay_id}}</li> 
+            <li>购买内容: {{i.product.name}}</li> 
+            <li>订单金额: {{i.fee}}元</li> 
+            <li>订单时间: {{i.add_time.strftime('%Y-%m-%d %X')}} 
+            <li>订单状态:
+                {% if i.isPaid() %} 
+                <span class="font-color-green">{{i.getStatusName()}}</span>     
+                {% else %} 
+                <span class="warning">{{i.getStatusName()}}</span>     
+                {% endif %} 
+            </li> 
+        </ul> 
+    </li> 
+    </a> 
+    {% endfor %} 
+    </ul> 
+</div> 
+{% endblock %} 
+{% block page_footer %} 
+    {{ super() }} 
+{% endblock %} 

@@ -1,0 +1,86 @@
+{% extends 'page.html' %} 
+{% block head_title %}订单详情{% endblock %}  
+{% block page_content %}
+<div class="header">
+   <a href="javascript:window.history.go(-1)"><span class="header-left">返回</span></a> 
+   <h1>订单详情</h1>
+</div>
+<div class="shop-order"> 
+    <div class="vip-info"> 
+        <fieldset>
+            <legend>个人信息</legend> 
+            联系姓名: {{g.user.realname}}<br />
+            联系电话: {{g.user.telephone}} 
+        </fieldset> 
+    </div> 
+    <div class="order-info"> 
+        <fieldset>  
+            <legend>产品信息</legend> 
+            [疯狂人脉说]{{g.order.product.name}}  
+        </fieldset> 
+    </div> 
+    <div class="tips"> 
+        总共支付<span class="warning">￥{{g.order.fee}}</span> 
+    </div> 
+    {% if g.order.isPaid() %} 
+        <span class="font-color-green text-center">{{g.order.getStatusName()}}</span>  
+    {% else %} 
+    <a href="#" id="wxPayBtn" class="btn rc bg-color-green">微信安全支付</a> 
+    {% endif %} 
+</div> 
+{% endblock %} 
+{% block page_footer %}
+{% endblock %} 
+{% block tail %}
+    {{ super() }} 
+<script>
+$("#wxPayBtn").click(function(){
+        _czc.push(["_trackEvent", "用户", "VIP", "点击支付"]);
+        var url = '{{url_for('payment.ajax_wxpay', id=g.order.id)}}';
+        var $btn = $(this);
+        $btn.addClass('ui-state-disabled');
+        $.getJSON(url, function(j){
+            if(j.ret == 0){
+                weixinPayData = j.params;
+                callpay();
+            }else{
+                $btn.removeClass('ui-state-disabled');
+                alert(j.msg);
+            }
+        });
+        return false;
+});
+//调用微信JS api 支付
+function jsApiCall()
+{
+    WeixinJSBridge.invoke(
+        'getBrandWCPayRequest',
+        weixinPayData,
+        function(res){
+            //WeixinJSBridge.log(res.err_msg);
+            if(res.err_msg.indexOf(':ok') > -1){
+                _czc.push(["_trackEvent", "用户", "VIP", "购买成功"]);
+                window.location.href = '{{url_for('payment.pay_result', order_id=g.order.id)}}';
+            }else{
+                _czc.push(["_trackEvent", "用户", "VIP", "取消购买"]);
+                alert(res.err_msg); 
+            }
+        }
+    );
+}
+
+function callpay()
+{
+    if (typeof WeixinJSBridge == "undefined"){
+        if( document.addEventListener ){
+            document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
+        }else if (document.attachEvent){
+            document.attachEvent('WeixinJSBridgeReady', jsApiCall);
+            document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
+        }
+    }else{
+        jsApiCall();
+    }
+}
+</script> 
+{% endblock %} 

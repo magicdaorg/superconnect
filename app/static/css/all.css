@@ -1,0 +1,451 @@
+@charset "UTF-8";
+/* line 1, /Users/xuu/Demo/Demo/source/stylesheets/util.scss */
+.fn_left,
+.fn_right {
+  display: inline;
+  /* 设置内联, 减少浮动带来的bug */ }
+
+/* 左浮动 */
+/* line 7, /Users/xuu/Demo/Demo/source/stylesheets/util.scss */
+.fn_left {
+  float: left; }
+
+/* 右浮动 */
+/* line 12, /Users/xuu/Demo/Demo/source/stylesheets/util.scss */
+.fn_right {
+  float: right; }
+
+/* 清理浮动 */
+/* line 17, /Users/xuu/Demo/Demo/source/stylesheets/util.scss */
+.fn_clear {
+  zoom: 1;
+  /* for IE6 IE7 */ }
+  /* line 19, /Users/xuu/Demo/Demo/source/stylesheets/util.scss */
+  .fn_clear:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0; }
+
+/* 单行文字溢出时出现省略号，需设定宽度 */
+/* line 30, /Users/xuu/Demo/Demo/source/stylesheets/util.scss */
+.fn_text_overflow {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap; }
+
+/* 文字居中 */
+/* line 37, /Users/xuu/Demo/Demo/source/stylesheets/util.scss */
+.fn_text_center {
+  text-align: center; }
+
+/* 隐藏文字 */
+/* line 42, /Users/xuu/Demo/Demo/source/stylesheets/util.scss */
+.fn_text_hide {
+  text-indent: 100%;
+  /* 1 */
+  white-space: nowrap;
+  overflow: hidden; }
+
+/* line 48, /Users/xuu/Demo/Demo/source/stylesheets/util.scss */
+.fn_hide {
+  display: none; }
+
+/* line 1, /Users/xuu/Demo/Demo/source/stylesheets/main.scss */
+html {
+  /*font-size: 62.5%;*/ }
+
+/* line 5, /Users/xuu/Demo/Demo/source/stylesheets/main.scss */
+body {
+  font-family: 'Segoe UI', 'Lucida Grande', 'Helvetica Neue', Helvetica, tahoma, Arial, 'Droid Sans', 'hiragino sans gb', stheiti, 'wenquanyi micro hei', '\5FAE\8F6F\96C5\9ED1', sans-serif;
+  font-size: 1rem;
+  /* =16px */
+  color: #313131; }
+@media screen and (max-width: 340px){/* 可视区域小于 850px, 设置更小font-size属性 */
+
+body{
+    font-size:0.8rem;
+    }
+}
+/* line 13, /Users/xuu/Demo/Demo/source/stylesheets/main.scss */
+.font_color_gray {
+  color: #d6d6d6; }
+
+/* line 18, /Users/xuu/Demo/Demo/source/stylesheets/main.scss */
+p {
+  margin: 0; }
+
+/* line 22, /Users/xuu/Demo/Demo/source/stylesheets/main.scss */
+h1 {
+  font-size: 2rem; }
+
+/* line 26, /Users/xuu/Demo/Demo/source/stylesheets/main.scss */
+h2 {
+  font-size: 1.8rem; }
+
+/* line 31, /Users/xuu/Demo/Demo/source/stylesheets/main.scss */
+h3 {
+  font-size: 1.6rem; }
+
+/* line 35, /Users/xuu/Demo/Demo/source/stylesheets/main.scss */
+h4 {
+  font-size: 1.4rem; }
+
+/* line 39, /Users/xuu/Demo/Demo/source/stylesheets/main.scss */
+h5 {
+  font-size: 1.2rem; }
+
+/* line 43, /Users/xuu/Demo/Demo/source/stylesheets/main.scss */
+h6 {
+  font-size: 1rem; }
+
+/* line 47, /Users/xuu/Demo/Demo/source/stylesheets/main.scss */
+a,a:visited,a:hover ,a:active  {
+  color: #4e4e4e;
+  text-decoration: none; }
+
+
+/* line 52, /Users/xuu/Demo/Demo/source/stylesheets/main.scss */
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none; }
+
+/* line 58, /Users/xuu/Demo/Demo/source/stylesheets/main.scss */
+.wrap {
+  padding: 0 1rem; background-color:#fff}
+
+/* line 62, /Users/xuu/Demo/Demo/source/stylesheets/main.scss */
+img {
+  max-width: 100%; }
+
+/* line 66, /Users/xuu/Demo/Demo/source/stylesheets/main.scss */
+button, .button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border-radius: 3px;
+  border-style: solid;
+  border-width: 0;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: normal;
+  line-height: 2.3;
+  margin: 0 0 1.11111rem;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  padding: 0 2rem;
+  font-size: 1.4rem;
+  background-color: #d3d3d3;
+  border-color: #aaaaaa;
+  color: #FFFFFF;
+  transition: background-color 300ms ease-out; }
+  /* line 87, /Users/xuu/Demo/Demo/source/stylesheets/main.scss */
+  button:focus, .button:focus {
+    outline: none; }
+
+/* line 93, /Users/xuu/Demo/Demo/source/stylesheets/main.scss */
+.main_color {
+  background-color: #D83827;
+  color: white; }
+
+/* line 98, /Users/xuu/Demo/Demo/source/stylesheets/main.scss */
+*, *:before, *:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; }
+
+/* new */
+/* line 106, /Users/xuu/Demo/Demo/source/stylesheets/main.scss */
+.card {
+  padding: 1rem 0.5rem;
+  margin-bottom: 1rem;
+  -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); }
+
+/* line 3, /Users/xuu/Demo/Demo/source/stylesheets/common.scss */
+.swipe {
+  overflow: hidden;
+  visibility: hidden;
+  position: relative; }
+
+/* line 9, /Users/xuu/Demo/Demo/source/stylesheets/common.scss */
+.swipe_wrap {
+  overflow: hidden;
+  position: relative; }
+
+/* line 14, /Users/xuu/Demo/Demo/source/stylesheets/common.scss */
+.swipe_wrap > div {
+  float: left;
+  width: 100%;
+  position: relative; }
+
+/* line 21, /Users/xuu/Demo/Demo/source/stylesheets/common.scss */
+.progress_bar {
+  font-size: 1.2rem;
+  height: 1.8rem;
+  width: 100%;
+  color: white;
+  background-color: #dd5c46; }
+  /* line 28, /Users/xuu/Demo/Demo/source/stylesheets/common.scss */
+  .progress_bar span {
+    display: inline-block;
+    width: 100%;
+    height: 1.8rem;
+    float: right;
+    border: solid 0.1rem #ddd;
+    border-left: none;
+    background-color: white; }
+
+/* line 40, /Users/xuu/Demo/Demo/source/stylesheets/common.scss */
+.nav_tabs {
+  padding: 0;
+  width: 100%; }
+  /* line 43, /Users/xuu/Demo/Demo/source/stylesheets/common.scss */
+  .nav_tabs .item {
+    float: left;
+    width: 33.33333%;
+    text-align: center;
+    line-height: 3;
+    border: solid 0.1rem #dd5c46;
+    border-right: none;
+    color: #dd5c46; }
+    /* line 51, /Users/xuu/Demo/Demo/source/stylesheets/common.scss */
+    .nav_tabs .item:last-of-type {
+      border-right: solid 0.1rem #dd5c46; }
+    /* line 54, /Users/xuu/Demo/Demo/source/stylesheets/common.scss */
+    .nav_tabs .item.active {
+      background-color: #dd5c46;
+      color: white; }
+
+/* line 61, /Users/xuu/Demo/Demo/source/stylesheets/common.scss */
+.show_contents {
+  padding: 1rem 0.5rem; }
+  /* line 63, /Users/xuu/Demo/Demo/source/stylesheets/common.scss */
+  .show_contents .item_header {
+    position: relative;
+    padding-bottom: 1rem;
+    border-bottom: dashed 0.1rem #ddd;
+    margin-bottom: 1rem; }
+  /* line 69, /Users/xuu/Demo/Demo/source/stylesheets/common.scss */
+  .show_contents .item_time {
+    position: absolute;
+    top: 0;
+    right: 0; }
+
+/* line 76, /Users/xuu/Demo/Demo/source/stylesheets/common.scss */
+.show_order_none {
+  text-align: center; }
+  /* line 78, /Users/xuu/Demo/Demo/source/stylesheets/common.scss */
+  .show_order_none .icon_none {
+    display: inline-block;
+    width: 6rem;
+    height: 6rem;
+    overflow: hidden; }
+
+/* line 86, /Users/xuu/Demo/Demo/source/stylesheets/common.scss */
+.load_more {
+  text-align: center; }
+
+/* line 2, /Users/xuu/Demo/Demo/source/stylesheets/index_b.scss */
+.lists .avatar {
+  width: 6rem;
+  height: 6rem;
+  margin-right: 1rem;
+  overflow: hidden; }
+
+/* line 10, /Users/xuu/Demo/Demo/source/stylesheets/index_b.scss */
+.lists_item {
+  /* margin-bottom: 1rem;  */
+  }
+
+/* line 8, /Users/xuu/Demo/Demo/source/stylesheets/index.scss */
+#slider {
+  height: 14rem; }
+  /* line 10, /Users/xuu/Demo/Demo/source/stylesheets/index.scss */
+  #slider .trigger {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center; }
+    /* line 16, /Users/xuu/Demo/Demo/source/stylesheets/index.scss */
+    #slider .trigger em {
+      color: white; }
+      /* line 18, /Users/xuu/Demo/Demo/source/stylesheets/index.scss */
+      #slider .trigger em.on {
+        color: #dd5c46; }
+
+/* line 25, /Users/xuu/Demo/Demo/source/stylesheets/index.scss */
+.nav_section {
+  text-align: center;
+  padding: 1rem 0; }
+  /* line 28, /Users/xuu/Demo/Demo/source/stylesheets/index.scss */
+  .nav_section .item {
+    display: inline-block;
+    float: left;
+    width: 25%;
+    padding: 0 0.5rem; }
+  /* line 34, /Users/xuu/Demo/Demo/source/stylesheets/index.scss */
+  .nav_section .item_icon {
+    display: inline-block;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    overflow: hidden; }
+  /* line 42, /Users/xuu/Demo/Demo/source/stylesheets/index.scss */
+  .nav_section .item_text {
+    display: block; }
+
+/* line 47, /Users/xuu/Demo/Demo/source/stylesheets/index.scss */
+.goods_section {
+  padding: 0 0.5rem 2rem; }
+  /* line 49, /Users/xuu/Demo/Demo/source/stylesheets/index.scss */
+  .goods_section .item {
+    display: inline-block;
+    float: left;
+    width: 50%;
+    padding: 0 0.5rem 1rem; }
+  /* line 55, /Users/xuu/Demo/Demo/source/stylesheets/index.scss */
+  .goods_section .item_name {
+    color: #313131; }
+  /* line 58, /Users/xuu/Demo/Demo/source/stylesheets/index.scss */
+  .goods_section .item_img {
+    width: 100%;
+    height: 0;
+    padding-bottom: 100%;
+    overflow: hidden; }
+  /* line 64, /Users/xuu/Demo/Demo/source/stylesheets/index.scss */
+  .goods_section .caption {
+    padding: 1rem 0; }
+    /* line 66, /Users/xuu/Demo/Demo/source/stylesheets/index.scss */
+    .goods_section .caption p {
+      font-size: 1.2rem; }
+
+/* line 4, /Users/xuu/Demo/Demo/source/stylesheets/showpic.scss */
+.showpic .item_avatar {
+  width: 4rem;
+  height: 4rem;
+  margin-right: 1rem;
+  overflow: hidden; }
+/* line 11, /Users/xuu/Demo/Demo/source/stylesheets/showpic.scss */
+.showpic .item_content {
+  padding-bottom: 1rem;
+  border-bottom: dashed 0.1rem #ddd;
+  margin-bottom: 1rem; }
+/* line 16, /Users/xuu/Demo/Demo/source/stylesheets/showpic.scss */
+.showpic .item_img {
+  width: 100%;
+  height: 0;
+  padding-bottom: 25%;
+  overflow-y: hidden;
+  overflow-x: auto;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+  -webkit-overflow-scrolling: touch; }
+  /* line 24, /Users/xuu/Demo/Demo/source/stylesheets/showpic.scss */
+  .showpic .item_img p {
+    white-space: nowrap; }
+  /* line 27, /Users/xuu/Demo/Demo/source/stylesheets/showpic.scss */
+  .showpic .item_img img {
+    width: 8rem; }
+
+/* line 34, /Users/xuu/Demo/Demo/source/stylesheets/showpic.scss */
+.item_action {
+  text-align: center; }
+  /* line 36, /Users/xuu/Demo/Demo/source/stylesheets/showpic.scss */
+  .item_action span {
+    display: inline-block;
+    line-height: 2;
+    padding-left: 2.5rem;
+    margin-right: 3rem; }
+    /* line 41, /Users/xuu/Demo/Demo/source/stylesheets/showpic.scss */
+    .item_action span:first-of-type {
+      background: url("../images/d.jpeg") 0 50% no-repeat;
+      background-size: 2rem; }
+    /* line 45, /Users/xuu/Demo/Demo/source/stylesheets/showpic.scss */
+    .item_action span:nth-of-type(2) {
+      background: url("../images/d.jpeg") 0 50% no-repeat;
+      background-size: 2rem; }
+    /* line 49, /Users/xuu/Demo/Demo/source/stylesheets/showpic.scss */
+    .item_action span:last-of-type {
+      background: url("../images/d.jpeg") 0 50% no-repeat;
+      background-size: 2rem;
+      margin-right: 0; }
+
+/* line 4, /Users/xuu/Demo/Demo/source/stylesheets/showpic_details.scss */
+.showpic_details .user_info {
+  padding: 1rem; }
+  /* line 6, /Users/xuu/Demo/Demo/source/stylesheets/showpic_details.scss */
+  .showpic_details .user_info .user_avatar {
+    width: 6rem;
+    height: 6rem;
+    margin-right: 1rem;
+    overflow: hidden; }
+/* line 15, /Users/xuu/Demo/Demo/source/stylesheets/showpic_details.scss */
+.showpic_details .show_order .item_content {
+  min-height: 5rem;
+  padding-bottom: 0;
+  margin-bottom: 0;
+  border: none; }
+/* line 23, /Users/xuu/Demo/Demo/source/stylesheets/showpic_details.scss */
+.showpic_details .goods_img {
+  width: 6rem;
+  height: 5rem;
+  margin-right: 1rem;
+  overflow: hidden; }
+
+/* line 4, /Users/xuu/Demo/Demo/source/stylesheets/friend.scss */
+.friend p.title {
+  padding-bottom: 1rem; }
+/* line 7, /Users/xuu/Demo/Demo/source/stylesheets/friend.scss */
+.friend table {
+  width: 100%; }
+
+/* line 12, /Users/xuu/Demo/Demo/source/stylesheets/friend.scss */
+.award_section {
+  padding: 1rem; }
+  /* line 14, /Users/xuu/Demo/Demo/source/stylesheets/friend.scss */
+  .award_section th, .award_section td {
+    padding: 0.5rem; }
+  /* line 17, /Users/xuu/Demo/Demo/source/stylesheets/friend.scss */
+  .award_section tr td:first-of-type {
+    border-right: solid 0.1rem #ddd; }
+
+/* line 22, /Users/xuu/Demo/Demo/source/stylesheets/friend.scss */
+.apprentice_section {
+  padding: 1rem; }
+  /* line 24, /Users/xuu/Demo/Demo/source/stylesheets/friend.scss */
+  .apprentice_section table {
+    text-align: center; }
+
+/* line 29, /Users/xuu/Demo/Demo/source/stylesheets/friend.scss */
+.share_section {
+  padding: 2rem 1rem;
+  text-align: center; }
+
+/* line 35, /Users/xuu/Demo/Demo/source/stylesheets/friend.scss */
+.lists_section li {
+  border-bottom: solid 0.1rem #ddd; }
+  /* line 37, /Users/xuu/Demo/Demo/source/stylesheets/friend.scss */
+  .lists_section li:first-of-type {
+    border-top: solid 0.1rem #ddd; }
+/* line 41, /Users/xuu/Demo/Demo/source/stylesheets/friend.scss */
+.lists_section a {
+  display: inline-block;
+  width: 100%;
+  line-height: 3; }
+
+/* line 4, /Users/xuu/Demo/Demo/source/stylesheets/orders.scss */
+.orders .item.card {
+  min-height: 10rem; }
+/* line 7, /Users/xuu/Demo/Demo/source/stylesheets/orders.scss */
+.orders .goods_img {
+  width: 8rem;
+  height: 8rem; }
+/* line 11, /Users/xuu/Demo/Demo/source/stylesheets/orders.scss */
+.orders .caption {
+  padding-left: 9rem; }

@@ -1,0 +1,98 @@
+{% extends 'page.html' %}
+{% block page_content %} 
+<div class="header">
+   <h1>个人中心</h1>
+</div>
+<div class="ucenter-index"> 
+    <div class="u-info">
+        <div class="headimg">
+            <img src="{{g.user.headimgurl}}" />
+        </div> 
+        <ul> 
+            <li>昵称: <span class="i-txt">{{g.user}}</span></li> 
+            <li>推荐人: <span class="i-txt">{{g.user.getMyPromoName()}}</span></li> 
+            <li>用户身份: <span class="i-txt">{% if g.user.isVip() %}VIP用户{% else %}非VIP用户{% endif %}</span> 
+                {% if not g.user.isVip() %} 
+                    <a class="font-color-blue" href="{{url_for('shop.buy')}}">点击购买VIP，赢取更多粉丝</a> 
+                {% endif %} 
+            </li> 
+        </ul> 
+    </div>
+    <div class="u-data"> 
+        <ul> 
+             <li>我的人脉: {{g.user.getFriendsCnt()}}人</li> 
+             <li>累计积分: ${{g.user.getCommission()}}</li> 
+        </ul> 
+    </div> 
+    <div class="u-public">
+        欢迎使用疯狂人脉说 
+    </div>
+
+    <div class="list">
+        <ul data-role="listview">
+            <a href="#">
+                <li id="m-connect" class="l-menu">
+                    <div class="li-icon">
+                        <img src="/static/images/icon/group.png" />
+                    </div>
+                    我的人脉
+                </li>
+            </a>
+                <div> 
+                    <div id="m-downline">
+                        <ul>  
+                            <a href="{{url_for("ucenter.list", level=1)}}"><li>一级人脉<span class="ui-li-right">{{g.user.getFriends1Cnt()}}</span></li></a> 
+                            <a href="{{url_for("ucenter.list", level=2)}}"><li>二级人脉<span class="ui-li-right">{{g.user.getFriends2Cnt()}}</span></li></a>
+                            <a href="{{url_for("ucenter.list", level=3)}}"><li>三级人脉<span class="ui-li-right">{{g.user.getFriends3Cnt()}}</span></li></a>
+                        </ul>
+                    </div>
+                <div class="clear"></div> 
+                </div> 
+            <a href="{{url_for('ucenter.wallet')}}">
+                <li class="l-menu">
+                    <div class="li-icon">
+                       <img src="/static/images/icon/wallet.png" />  
+                    </div>
+                    我的钱包<span class="ui-li-right"><span class="warning">可提现: ${{g.user.getWithCommission()}}&nbsp;&nbsp;</span>></span>
+                </li>
+            </a>  
+            <a href="{{url_for('ucenter.money')}}">
+                <li class="l-menu">
+                    <div class="li-icon">
+                       <img src="/static/images/icon/income.png" />  
+                    </div>
+                    收益详情<span class="ui-li-right">></span>
+                </li>
+            </a>
+            <div class="gray-block">
+            </div> 
+            <a href="{{url_for('m.list')}}">
+                <li class="l-menu">
+                    <div class="li-icon">
+                       <img src="/static/images/icon/star.png" />  
+                    </div>
+                    <span class="warning">进入粉丝人脉</span><span class="ui-li-right">></span>
+                </li>
+            </a> 
+            <li class="l-menu"></li> 
+        </ul> 
+    </div> 
+</div> 
+{% endblock %} 
+{% block page_footer %}  
+    {{ super() }} 
+{% endblock %} 
+{% block tail %}
+    {{super() }}
+<script>
+$("#m-connect").click(function(){
+    var display = $("#m-downline").css("display");
+    if(display == 'none'){
+        $("#m-downline").css("display", "block"); 
+    }else{
+        $("#m-downline").css("display", "none"); 
+    }
+}); 
+
+</script> 
+{% endblock %} 

@@ -1,0 +1,104 @@
+{% extends 'page.html' %}
+{% block page_content %} 
+<div class="header">
+   <a href="javascript:window.history.go(-1)"><span class="header-left">返回</span></a> 
+   <h1>Ta的个人中心</h1>
+</div>
+<div class="ucenter-index"> 
+    <div class="u-info">
+        <div class="headimg">
+            <img src="{{g.info.headimgurl}}" />
+        </div> 
+        <ul> 
+            <li>昵称: <span class="i-txt">{{g.info}}</span></li> 
+            <li>推荐人: <span class="i-txt">{{g.info.getMyPromoName()}}</span></li> 
+            <li>微信号: <span class="i-txt">{% if g.fan.wechat %} {{ g.fan.wechat }} {% else %}未设置{% endif %} </span></li> 
+            <li>用户身份: <span class="i-txt">{% if g.info.isVip() %}VIP用户{% else %}非VIP用户{% endif %}</span> 
+                {% if not g.info.isVip() %} 
+                    <a class="font-color-blue" href="{{url_for('shop.buy')}}">点击购买VIP，赢取更多粉丝</a> 
+                {% endif %} 
+            </li> 
+        </ul> 
+    </div>
+    <div class="u-data"> 
+        <ul> 
+             <li>Ta的人脉: {{g.info.getFriendsCnt()}}人</li> 
+             <li>累计佣金: ${{g.info.getCommission()}}</li> 
+        </ul> 
+    </div> 
+    <div class="u-data-info">
+        <div class="u-info-desc">
+            <div class="u-title">个人介绍</div> 
+            <div>
+                <div class="left-content">{{g.fan.desc.strip() }}</div>
+                <div class="right-content">
+                        <a href="javascript:;" id="addFriendBtn" user-id="{{g.fan.user.id}}">
+                                <div class="add-qr">
+                                    <img style="width:100%" src="/static/images/icon/qr-128.png" />  
+                                </div> 
+                                点击加好友
+                        </a> 
+                </div>
+            </div> 
+        </div> 
+        <div class="gray-block clear"></div>  
+        <div class="u-info-desc">
+            <div class="u-title">我的微信群</div> 
+            <div>
+                <ul>
+                {% if g.fan.qunimg_url %} 
+                    <a href="{{url_for('profile.group', id=g.info.id)}}"> 
+                    <li class="li-menu">
+                        <div style="float:left;margin-left:0.9em;width:17%;"><img style="width:100%;" src="/static/images/icon/people.png" />
+                        </div>  
+                        <div style="float:left;width:60%;margin-left:0.5em;color:gray;">
+                        {{g.fan.qun_desc.strip()}}
+                        </div> 
+                        <span class="ui-li-right" style="margin-right:1em;margin-top:2em;">></span> 
+                    </li> 
+                    </a> 
+                {% else %}
+                    <li style="text-align:center">未上传二维码</li> 
+                {% endif %} 
+                </ul> 
+            </div> 
+        </div> 
+    </div>
+</div> 
+{% endblock %} 
+{% block page_footer %}  
+{% endblock %} 
+{% block tail %}
+    {{super() }}
+    <script src="/static/js/zepto.popup.js" type="text/javascript"></script>
+<script>
+    $("#addFriendBtn").click(function() { 
+        var user_id = $(this).attr("user-id");
+        $.get("{{url_for('m.user_qr_ajax')}}"+"?user_id=" + user_id, function(res) {
+                    var $pop = $.popUp({
+                        close: false,
+                        shade: true,   // 不显示遮罩层
+                        position: "center",
+                        isScrollMove: false,  
+                        tmpl: {
+                            close: true,
+                            body: res
+                        },
+                        aniProperties: {
+                             popUp: { opacity: 1.8 }
+                        }
+                    });
+                    $pop.pop();
+                    $("#shade").css('top', topy);  
+                    $(".pop-wrapper").css('top', imgtopy); 
+
+                    var bad_buy = getCookie('bad_buy'); 
+                    if(bad_buy != null){
+                        bad_buy -= 1; 
+                        setCookie('bad_buy', bad_buy, 1); 
+                    }
+
+            },"html"); 
+    });  
+</script> 
+{% endblock %} 

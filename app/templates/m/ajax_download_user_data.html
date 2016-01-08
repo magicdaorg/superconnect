@@ -1,0 +1,23 @@
+{% for i in g.fans %} 
+ <li>
+    <!--<a href="{{url_for('profile.info', id=i.user.id)}}"> -->
+    <div class="img-wrap">
+        <img src="{{i.photo_url}}" />  
+    </div> 
+    <div class="u-info">
+        <span>[{{i.province}}-{{i.city}}]</span>{{i.nickname}}
+        <div class="desc">
+        {% if g.list_type == 'personal' %}
+            {{i.desc}} 
+        {% else %}
+            {{i.qun_desc}} 
+        {% endif %} 
+        </div> 
+    </div> 
+    </a> 
+    <div class="add-friend"> 
+        <a href="javascript:void(0)" class="rc" user-id="{{i.user.id}}"><span class="addf">加好友</span></a> 
+        <p>{{i.getDiffTime()}}</p> 
+    </div> 
+</li> 
+{% endfor %} 

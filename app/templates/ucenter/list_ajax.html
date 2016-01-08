@@ -1,0 +1,17 @@
+<ul> 
+{% for i in g.friends %}
+<li class="li-user">
+    <div>
+        <div class="head"> 
+            <img src="{{i.headimgurl}}" />
+        </div> 
+        <div class="user-info"> 
+            <ul>
+                <li> {{i.nickname}} </li>  
+                <li class="add-time"> 关注时间: {{i.add_time.strftime('%Y-%m-%d %X')}} 
+            <ul> 
+        </div> 
+    </div> 
+</li> 
+{% endfor %} 
+</ul>

@@ -1,0 +1,95 @@
+{% extends 'page.html' %} 
+{% block head_meta %}  
+    {{ super() }} 
+    <link rel="stylesheet" href="{{url_for('static', filename='css/all.css')}}" />    
+{% endblock %} 
+{% block head_title %}购买VIP会员{% endblock %} 
+{% block page_content %} 
+<div class="header">
+   <a href="javascript:window.history.go(-1)"><span class="header-left">返回</span></a> 
+   <h1>购买VIP会员</h1>
+</div>
+<div class="shop-buy">  
+<div class="tips">
+<div class="tips-title">温馨提示：</div>
+<div class="tips-content">&nbsp;&nbsp;购买VIP后，可以到粉丝人脉中，发布自己的微信二维码，这样别人就能主动加你，生意找上门。
+同时，还能得到疯狂人脉说永久推广二维码，分享推广二维码，还能赚取积分，积分可以提现哟。
+</div>
+</div> 
+<form id="buyForm"> 
+<div class="vip-type">
+    <fieldset>
+        <legend>购买套餐类型: </legend> 
+         <ul>
+         {% for i in g.products %}
+            <li> 
+            {% if i.default_checked %} 
+                <input type="radio" name="pid" value="{{i.id}}" data-id="{{i.id}}" id="pid{{loop.index}}" checked />
+            {% else %}
+                <input type="radio" name="pid" value="{{i.id}}" data-id="{{i.id}}" id="pid{{loop.index}}" />
+            {% endif %} 
+            <label>{{i.month}}个月 = {{i.fee}}元{% if i.remark %}<span class="warning">({{i.remark}})</span>{% endif %}</label> 
+            </li>    
+         {% endfor %} 
+         </ul> 
+    </fieldset> 
+</div> 
+<div class="vip-info"> 
+    <div class="input-text"> 
+    <label for="username">联系姓名: <span class="vip-tips">预留姓名不会对外公开</span></label> 
+    <input type="text" name="username" id="username" value="{{g.user.realname}}" /> 
+    </div> 
+    <div class="input-text"> 
+    <label for="tel">联系电话: <span class="vip-tips">预留联系电话不会对外公开</span></label> 
+    <input type="text" name="tel" id="tel" value="{{g.user.telephone}}" /> 
+    </div>
+</div>
+<div>
+    <input type="checkbox" checked />已阅读并同意<a href="/sc/articles/i/55d356f53c2f146e5fb16137"><span class="warning">《平台服务协议》</span></a> 
+</div>
+<a href="#" onclick="submitPreCheck();return  false" class="btn rc bg-color-green">立即购买</a> 
+</form> 
+</div>
+{% endblock %} 
+{% block page_footer %}
+{% endblock %} 
+{% block tail %}
+    {{super()}}
+<script>
+    $(function(){
+        //声明_czc对象:
+        _czc.push(["_trackEvent", "用户", "VIP", "打开购买页"]); 
+    }); 
+    function submitPreCheck() {
+        var pid = $("input[type=radio][checked]").attr('data-id');  
+        if(pid == ''){
+            alert("没有选择购买VIP服务类型，请选择购买时长!"); 
+            return ; 
+        }
+
+        var username = $("#username").val();
+        if(username == ''){
+            alert("请输入您的姓名，保障您的合法权益!");
+            return ; 
+        }
+
+        var tel = $("#tel").val();
+        if(tel == ''){
+            alert("请输入您的手机号码，保障您的合法权益!"); 
+            return ; 
+        }
+
+        _czc.push(["_trackEvent", "用户", "VIP", "点击购买"]);
+        $.post("{{url_for('shop.buy')}}", $("#buyForm").serialize(), function(res){
+            res = $.parseJSON(res); 
+            if(res['ret'] != 0){
+                alert(res['error'] + "(" + res['ret'] + ")"); 
+                return ; 
+            }else{
+                window.location.href = res["data"]["redirect_url"]; 
+            }
+        }); 
+        return false; 
+    }
+</script> 
+{% endblock %} 

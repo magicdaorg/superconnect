@@ -1,0 +1,20 @@
+{% extends 'admin/base.html' %}
+{% block title %}  
+    提取红包详情
+{% endblock %} 
+{% block body %}
+<table>
+<tr>
+
+</tr> 
+{% for i in logs %}
+<tr>
+<td>{{i.redpack_number}}</td>  
+<td>{{i.mch_billno}}</td> 
+<td>{{i.status}}</td> 
+<td>{{i.remark}}</td> 
+<td>{{i.add_time}}</td> 
+</tr> 
+{% endfor %} 
+</table> 
+{% endblock %} 

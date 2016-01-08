@@ -1,0 +1,34 @@
+{% extends 'admin/master.html' %} 
+{% block body %}
+    <div>
+        <div>
+            <img src="{{user.headimgurl}}"  width=64 height=64 /> 
+            {{user.nickname}} 
+        </div> 
+        收益订单总数: {{ commissions | length }}单 
+    </div> 
+    <table class="table table-striped">
+    <thead>
+        <tr>
+            <th>购买人</th> 
+            <th>交易时间</th> 
+            <th>订单</th>
+            <th>收益</th> 
+        </tr> 
+    </thead> 
+    <tbody>
+    {% for i in commissions %}
+        <tr> 
+            <td><img src="{{i.order.user.headimgurl}}" width=32 height=32 />{{i.order.user.nickname}}</td> 
+            <td>{{i.add_time.strftime('%Y-%m-%d %X')}}</td>
+            <td>{{i.order}}</td>
+            <td>{{i.commission}}</td> 
+        </tr> 
+    {% endfor %} 
+    </tbody>
+    </table> 
+{% endblock %} 
+
+{% block tail %} 
+    {{ super() }} 
+{% endblock %} 

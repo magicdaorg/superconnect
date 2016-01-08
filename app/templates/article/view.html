@@ -1,0 +1,32 @@
+<html>
+<head>
+     <!-- Always force latest IE rendering engine or request Chrome Frame -->
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="renderer" content="webkit"> 
+    <title>{{g.article.title}}</title>  
+</head> 
+
+<body>
+<style>
+body{font-family:'微软雅黑';line-height: 26px;color: rgb(62, 62, 62);}
+
+ul,li{list-style:none;padding:0}
+img{width:100% !important;height:auto !important;}
+a{text-decoration:none;color:#84A0F9}
+.tit{font-size:1.5rem;}
+</style>
+<div style="padding-left:0.5rem;padding-top:0.2rem">
+    <ul>
+    <li class="tit">{{g.article.title}}</li>
+    <li>{{g.article.add_time.strftime('%Y-%m-%d')}} <a href="#">{{g.article.author}}</a></li>
+    </ul>
+</div>
+<div style="width:100%">
+{{g.article.content | safe}} 
+</div>
+</body> 
+<div style="display:none">
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1255679456'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1255679456' type='text/javascript'%3E%3C/script%3E"));</script>
+</div>
+</html> 

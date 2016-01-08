@@ -1,0 +1,219 @@
+{% extends 'page.html' %} 
+{% block head_meta %}  
+    {{ super() }} 
+    <link rel="stylesheet" href="{{url_for('static', filename='css/all.css')}}" />    
+    <script>
+        var a  = $(".loading").width()/2;
+        $(".loading").css("top",$(window).height()/2 -a);
+        $(".loading").css("left",$(window).width()/2 -a);
+    </script>
+{% endblock %} 
+{% block page_content %} 
+<div class="header header-fixed">
+   <a href="#" id="filterBtn"><span class="header-left">高级搜索</span></a> 
+   <h1>粉丝人脉</h1> 
+   <a id="setTopBtn" href="#"><span class="header-right">置顶刷新</span></a> 
+   <div id="filter-users">
+            <ul>
+                <li>地址筛选</li> 
+                <li> 
+                    <select class="select" name="province" id="province">
+                        <option></option>
+                    </select>
+                    <select class="select" name="city" id="city">
+                        <option></option>
+                    </select> 
+                </li> 
+                <li>性别</li> 
+                <li>
+                    <select name="sex" id="sex">
+                        <option value='不限'>不限</option> 
+                        <option value='女'>女</option> 
+                        <option value='男'>男</option> 
+                    </select> 
+                </li> 
+                <li>
+                    <a href="#" class="filter-btn" id="filter-confirm">确认</a><a href="#" class="filter-btn" id="filter-reset">恢复全国</a> 
+                </li> 
+            </ul> 
+    </div> 
+    <div class="m-2rd-selector">
+        <ul>
+            <a href="{{url_for('m.list')}}">
+                <li style="color: red">个人二维码</li> 
+            </a> 
+                <a href="{{url_for('m.group_list')}}">
+                <li style="border-left: 1px solid #BAB4B4">微信群二维码</li>  
+            </a> 
+        </ul> 
+        </div> 
+    </div> 
+    <div class="m-list">
+        <ul>
+        </ul> 
+    </div> 
+    <div class="loading rc">
+        <img src="/img/progress.gif" /> 
+    </div> 
+    {% endblock %} 
+    {% block page_footer %} 
+    <div class="fans-footer">
+    <ul>
+        <a href="{{url_for('m.list')}}"><li style="width:35%">刷新本页</li></a>  
+        <a href="{{url_for('shop.buy')}}"><li class="lrlines" style="width:30%">购买VIP</li></a>  
+        <a href="{{url_for('ucenter.upload')}}"><li style="width:35%">
+        {% if g.isUploaded %}
+        更新二维码
+        {% else %}
+        发布二维码  
+        {% endif %}
+        </li></a>  
+    </ul> 
+    </div> 
+    {% endblock %} 
+    {% block tail %}
+        {{super()}} 
+       <script src="/static/js/area.js" type="text/javascript"></script>
+       <script src="/static/js/zepto.popup.js" type="text/javascript"></script>
+       <script>
+        $(function() {
+            setup();preselect('省份');promptinfo();
+        });
+       $(function() { 
+
+        $("#filterBtn").click(function(){
+            var display = $("#filter-users").css("display");  
+            if(display == "none"){
+                $("#filter-users").css("display", "block");
+            }else{
+                $("#filter-users").css("display", "none"); 
+            }
+            _czc.push(["_trackEvent", "用户", "操作", "高级搜索"]);
+        }); 
+
+
+        $("body").on('click', ".add-friend a", function() {
+            var topy = window.pageYOffset; 
+            var imgtopy = window.pageYOffset + $(window).height() / 4; 
+            var user_id = $(this).attr("user-id");
+
+            $.get("{{url_for('m.user_qr_ajax')}}"+"?user_id=" + user_id, function(res) {
+                        var $pop = $.popUp({
+                            close: false,
+                            shade: true,   // 不显示遮罩层
+                            position: "top-center",
+                            isScrollMove: false,  
+                            tmpl: {
+                                close: true,
+                                body: res
+                            },
+                            aniProperties: {
+                                 popUp: { opacity: 1.8 }
+                            }
+                        });
+                        $pop.pop();
+                        $("#shade").css('top', topy);  
+                        $(".pop-wrapper").css('top', imgtopy); 
+
+                        var bad_buy = getCookie('bad_buy'); 
+                        if(bad_buy != null){
+                            bad_buy -= 1; 
+                            setCookie('bad_buy', bad_buy, 365); 
+                        }
+
+                        var upload_bad_buy = getCookie("upload_bad_buy"); 
+                        if(upload_bad_buy != null){
+                            upload_bad_buy -= 1;
+                            setCookie("upload_bad_buy", upload_bad_buy, 365); 
+                        }
+                },"html"); 
+            _czc.push(["_trackEvent", "用户", "操作", "加人"]); 
+        });
+
+
+        $("#setTopBtn").click(function(){
+
+            $.post("{{url_for('m.cmd')}}", {cmd: 'top'}, function(res) {
+                res = $.parseJSON(res);
+                if(res['ret'] != 0){
+                    alert(res['error']); 
+                }else{
+                    setCookie('bad_buy', '9', 365); 
+                    window.location.reload(); 
+                }
+            }); 
+            _czc.push(["_trackEvent", "用户", "操作", "置顶"]); 
+        }); 
+
+        var start = 0;
+        var page_size = 20; 
+        var province = '';
+        var city = '';
+        var sex = '';
+
+
+        function appendUserData(content) {
+            $(content).appendTo(".m-list ul");      
+        };
+        
+        function load(start, pageSize, province, city, sex) {
+            var params = {
+                start: start,
+                page_size: pageSize,
+                province: province,
+                city: city,
+                sex: sex 
+            }
+            $.getJSON("{{url_for('m.ajax_download_user_data')}}", params, function(res){
+                if(res['ret'] != 0){
+                }else{
+                    var content = res['data']['content']; 
+                    appendUserData(content); 
+                    $(".loading").css("display", "none"); 
+                }
+            }); 
+        }; 
+
+        $("#filter-confirm").click(function(){
+            province = $("#province").val(); 
+            city = $("#city").val(); 
+            sex = $("#sex").val(); 
+
+            start = 0;
+            page_size = 20; 
+
+            $(".m-list ul").html(""); 
+            load(start, page_size, province, city, sex); 
+            $("#filter-users").css("display", "none"); 
+            
+            display_value = province;
+            if(city != "地级市"){
+                display_value = city; 
+            }
+
+            if(display_value == "省份"){
+                if(sex != "不限"){
+                    display_value = sex; 
+                }
+            }
+            $("#filterBtn span").html(display_value); 
+        }); 
+
+        $("#filter-reset").click(function(){
+            window.location.reload(); 
+        }); 
+
+        load(start, page_size, province, city, sex);//第一次预加载 
+
+        $(window).scroll(function(){
+            var top = $(this).scrollTop(); 
+            var window_height = $(window).height();  
+            var scroll_height = $(document).height(); 
+            if(top + window_height >= scroll_height) {
+            start += page_size; 
+            load(start, page_size, province, city, sex); 
+        }
+    }); 
+   }); 
+   </script>
+{% endblock %}

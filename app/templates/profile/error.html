@@ -1,0 +1,14 @@
+{% extends 'page.html' %}
+{% block head_title %}权限不够{% endblock %} 
+{% block page_content %}
+<div class="header">
+   <a href="javascript:window.history.go(-1)"><span class="header-left">返回</span></a> 
+   <h1>错误</h1>
+</div>
+<div class="g-error">
+    <p>亲爱的{{g.info.nickname}}, 您还未上传自己的二维码到粉丝中心，请上传!</p> 
+    <div class="buy-vip"><a href="{{url_for('ucenter.upload')}}">点击上传二维码</a></div>  
+</div> 
+{% endblock %} 
+{% block page_footer %}
+{% endblock %} 

@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block body %}
+<div data-role="page">
+    {% block page_content %}
+    {% endblock %}
+    {% block page_footer %}
+        <div class="footer"> 
+            <ul>
+               <a href="{{url_for('shop.buy')}}">
+                <li>
+                    <div class="footer-icon"><img src="/static/images/icon/shop-128.png" /></div>  
+                    <span class="{{'warning' if request.path in ("/sc/buy/", ) else ''}}">购买VIP</span> 
+                </li>
+                </a>
+               <a href="{{url_for('ucenter.order')}}"><li>
+                    <div class="footer-icon"><img src="/static/images/icon/cart-128.png" /></div>  
+                    <span class="{{'warning' if request.path in ("/sc/ucenter/order", ) else ''}}">我的订单</span> 
+                    </li>
+                </a>
+               <a href="{{url_for('ucenter.index')}}"><li>
+                    <div class="footer-icon"><img src="/static/images/icon/home-128.png" /></div>  
+                    <span class="{{'warning' if request.path in ("/sc/ucenter/", ) else ''}}">个人中心</span>
+                    </li>
+                </a>
+               <a href="{{url_for('promotion.qrcode', uid=g.user.id)}}"><li>
+                    <div class="footer-icon"><img src="/static/images/icon/qr-128.png" /></div>  
+                    二维码海报
+                    </li>
+                </a>
+            </ul>
+        </div>
+    {% endblock %}
+</div>
+{% endblock %}

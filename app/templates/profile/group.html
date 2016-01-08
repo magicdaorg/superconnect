@@ -1,0 +1,27 @@
+{% extends 'page.html' %}
+{% block head_title %}加群二维码{% endblock %} 
+{% block page_content %} 
+<div class="header">
+   <a href="javascript:window.history.go(-1)"><span class="header-left">返回</span></a> 
+   <h1>加群二维码</h1>
+</div>
+<div class="profile-group">
+    <div class="u-data-info">  
+        <div class="u-data-desc"> 
+            <div class="u-title">群二维码介绍</div> 
+            <div>
+                <div class="left-content">{{g.fan.qun_desc.strip()}}</div> 
+            </div> 
+        </div> 
+        <div style="margin-top:3em;" class="gray-block clear"></div>  
+        <div class="u-data-desc">  
+            <div class="u-title">Ta的群二维码</div> 
+            <div style="margin:auto;width:80%;margin-top:1em;">
+                <img style="width:100%;" src="{{g.fan.qunimg_url}}" /> 
+            </div> 
+        </div> 
+    </div> 
+</div> 
+{% endblock %} 
+{% block page_footer %}  
+{% endblock %} 

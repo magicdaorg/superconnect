@@ -1,0 +1,30 @@
+{% extends "page.html" %} 
+{% block page_content %} 
+<div class="header">
+   <a href="javascript:window.history.go(-1)"><span class="header-left">返回</span></a> 
+   <h1>我的{{g.level}}级人脉</h1>
+</div>
+<div class="ucenter-list">
+    <div id="friendslist">
+    </div> 
+</div> 
+{% endblock %} 
+{% block page_footer %} 
+{% endblock %} 
+{% block tail %}
+    {{ super() }} 
+<script>
+function getFriends(level){
+    $.getJSON('{{url_for('ucenter.list_ajax')}}', {level: level}, function(res){
+        if(res['ret'] == 0){
+            $("#friendslist").html(res['data']['content']); 
+        }else{
+            alert('error'); 
+        }
+    }); 
+}
+
+var level = '{{g.level}}'
+getFriends(level); 
+</script>
+{% endblock %} 

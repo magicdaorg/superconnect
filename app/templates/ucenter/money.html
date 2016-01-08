@@ -1,0 +1,35 @@
+{% extends 'page.html' %} 
+{% block head_title %}收益详情{% endblock %} 
+{% block page_content %} 
+<div class="header">
+    <a href="javascript:window.history.go(-1)"><span class="header-left">返回</span></a> 
+    <h1>收益详情</h1> 
+</div> 
+<div class="ucenter-money">
+<p>亲，以下是你收益详情信息，纪录了您每一份收益的来源以及得到的积分。  </p> 
+<ul>
+    {% for i in g.orders %} 
+        <li class="order-li">
+            <div>
+                <ul class="commission-detail">
+                    <li class="u-header li-left">
+                        <img src="{{i.order.user.headimgurl}}" /> 
+                    </li> 
+                    <li class="li-left">
+                        <ul>
+                            <li class="product">{{i.order.product}}</li>
+                            <li class="add-time">{{i.add_time.strftime('%Y-%m-%d %X')}}</li>  
+                        </ul>
+                    </li>
+                    <li class="fee">
+                    <span>+{{i.commission}}</span>  
+                    </li>
+                </ul> 
+            </div> 
+        </li>
+    {% endfor %} 
+</ul> 
+</div> 
+{% endblock %} 
+{% block page_footer %}
+{% endblock %} 

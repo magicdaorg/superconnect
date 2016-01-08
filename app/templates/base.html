@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html> 
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/normalize.css')}}" />    
+    <link rel="stylesheet" href="{{url_for('static', filename='css/superconnect.css')}}?v=4.1" />    
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>  
+    <script src="/static/js/zepto.js" type="text/javascript"></script>
+    <script src="/static/js/fastclick.js" type="text/javascript"></script>
+    <meta name="motherid" content="{{g.user.id if g.user else ''}}" /> 
+    <title>{% block head_title %}疯狂人脉说{% endblock %}</title> 
+    {% block head_meta %} 
+    {% endblock %} 
+    <script type="text/javascript">
+        $(function() {
+            FastClick.attach(document.body);
+        }); 
+        function getParameterByName(name) {
+            name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+            var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+                results = regex.exec(location.search);
+            return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+        }; 
+        (function (){
+            var hrefOfwindow = window.location.href;
+            var motherid = $("meta[name=motherid]").attr("content");
+            var urlmotherid = getParameterByName('motherid'); 
+            if(hrefOfwindow.indexOf('motherid') < 0 ){
+                if(hrefOfwindow.indexOf('?') >= 0) {
+                    window.location.href = hrefOfwindow +"&motherid=" + motherid; 
+                }else{
+                    window.location.href = hrefOfwindow +"?motherid=" + motherid;
+                }
+            }else if( urlmotherid != motherid ) {
+                hrefOfwindow = hrefOfwindow.replace('motherid='+urlmotherid, 'motherid='+motherid); 
+                window.location.href = hrefOfwindow; 
+            }
+        }()); 
+    </script> 
+</head> 
+<body>
+{% block body %}
+    BODY
+{% endblock %}
+<script>
+document.write('<script type="text/javascript" src="/sc/wechatjs/config?' + Math.random() + '"><\/script>');
+/***字符串格式化***/
+String.prototype.format= function(){
+       var args = arguments;
+       return this.replace(/\{(\d+)\}/g,function(s,i){
+         return args[i];
+       });
+}
+
+//写cookies
+function setCookie(c_name, value, expiredays){
+    var exdate=new Date();
+    exdate.setDate(exdate.getDate() + expiredays);
+    document.cookie=c_name+ "=" + escape(value) + ((expiredays==null) ? "" : ";expires="+exdate.toGMTString()) + ";path=/";
+}
+ 
+//读取cookies
+function getCookie(name)
+{
+    var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+    if(arr=document.cookie.match(reg))
+        return (arr[2]);
+    else
+        return null;
+}
+
+</script>
+<div style="display:none">
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1255679456'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1255679456' type='text/javascript'%3E%3C/script%3E"));</script>
+</div> 
+{% block tail %} 
+<script>
+    wx.ready(function(){
+        wx.hideAllNonBaseMenuItem(); 
+    });
+    //声明_czc对象:
+    var _czc = _czc || [];
+</script>
+{% endblock %} 
+</body> 
+</html> 

@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link href="/static/css/normalize.css" rel="stylesheet" type="text/css" />
+    <link href="/static/css/superconnect.css" rel="stylesheet" type="text/css" />
+    <link href="/static/css/all.css" rel="stylesheet" type="text/css" />
+    <link href="/static/css/jquery.fileupload.css" rel="stylesheet" type="text/css" />
+    <link href="/static/css/jquery.fileupload-ui.css" rel="stylesheet" type="text/css" />
+    <meta name="motherid" content="{{g.user.id if g.user else ''}}" />
+    <title>更新二维码</title>
+<style type="text/css">
+a, a:visited, a:hover, a:active {text-decoration:none;color:blue;!important} 
+h1 {margin: 0px 0px;font-size:1.3em;display:inline} 
+.rc{-moz-border-radius: 5px; -webkit-border-radius: 5px; border:1px solid #fff; }
+.inputWrapper {height: auto;width: 5rem;overflow: hidden;position: relative;cursor: pointer;background-color: green;text-align: center;}
+input[type=text] {border:1px solid #4d90fe;width:100%;height:2.5em;text-indent:0.4rem} 
+textarea { width: 100%; border:1px solid #4d90fe;text-indent:0.4rem;}  
+#uploadProfile a {margin-top: 1em;}
+.fileInput {cursor: pointer;height: 100%;position:absolute;top: 0;right: 0;z-index: 99;font-size:50px;opacity: 0;-moz-opacity: 0;filter:progid:DXImageTransform.Microsoft.Alpha(opacity=0)}
+.inputWrapper span {color: #fff;line-height: 1.6rem;}
+#head_display_div {display:none;}
+#qr_display_div {display:none;}
+.img-wrap {width: 40%;}
+.img-wrap a{color: green;}
+.title-li {float: left;margin-top: 0.3em;} 
+.ucenter-upload { margin-top: 1.5em; }
+</style>
+</head>
+<body> 
+<div class="header">
+   <a href="javascript:window.history.go(-1)"><span class="header-left">返回</span></a> 
+   <h1>更新二维码</h1>
+</div>
+<div class="ucenter-upload">
+  <div class="wrap">
+    <ul>
+        <li>
+            <div class='title-li'><span class="warning">*</span>我的头像： </div>
+            <div id="head_input_div">
+                <div class="inputWrapper rc">
+                    <input id="headfile" class="fileInput" type="file" name="image" data-url="{{url_for('ucenter.upload_ajax')}}" />
+                    <span>立即上传</span>
+                </div>
+                <div id="progressbar-head">
+                     <div class="bar rc" style="width: 0%;height: 18px;background: green;">
+                          <span style="color:#fff"></span>
+                     </div>
+                </div>
+             </div>
+             <div style="clear:both" /></div>
+             <div id="head_display_div">
+                <div class="img-wrap">
+                    <img src="" />
+                </div>
+                <a href="#">修改图片</a>
+             </div>
+        </li>
+        <li>
+            <div class="title-li"><span class="warning">*</span>个人微信二维码：</div>
+            <div id="qr_input_div">
+                <div class="inputWrapper rc">
+                    <input id="qrfile" class="fileInput" type="file" name="image" data-url="{{url_for('ucenter.upload_ajax')}}" />
+                    <span>立即上传</span>
+                </div>
+                <div id="progressbar-qr">
+                     <div class="bar rc" style="width: 0%;height: 18px;background: green;">
+                        <span style="color:#fff"></span>
+                    </div>
+                </div>
+            </div>
+            <div id="qr_display_div">
+                <div class="img-wrap">
+                    <img src="" />
+                </div>
+                <a href="#">修改图片</a>
+            </div>
+        </li>
+        <li>
+            <div class="title-li">微信群二维码(可选项): </div> 
+            <div id="qun_input_div">
+                <div class="inputWrapper rc">
+                    <input id="qunfile" class="fileInput" type="file" name="image" data-url="{{url_for('ucenter.upload_ajax')}}" /> 
+                    <span>立即上传</span> 
+                </div> 
+                <div id="progressbar-qun">
+                    <div class="bar rc" style="width: 0%;height: 18px;background: green;"> 
+                        <span style="color:#fff"></span> 
+                    </div> 
+                </div> 
+            </div>
+            <div id="qun_display_div">
+                <div class="img-wrap">
+                    <img src="" /> 
+                </div> 
+                <a href="#">修改图片</a> 
+            </div> 
+            <div class="warning">
+                温馨提示：微信群二维码有效期只有7天，请每7天更新一次！您可以同时发布个人微信二维码和微信群二维码，当然您也可以只发布个人微信二维码，而不发群二维码! 
+            <div>
+        </li> 
+    </ul>
+  </div>
+<form id="uploadProfile" action="" method="post" enctype="multipart/form-data">
+  <input id="photo_url" name="photo_url" type="hidden" value='' />
+  <input id="qrimg_url" name="qrimg_url" type="hidden" value='' />
+  <input id="qunimg_url" name="qunimg_url" type="hidden" value='' />
+  <div class="wrap">
+    <ul>
+    <li><span class="warning">*</span>选择您所在地址</li> 
+    <li>
+        <select class="select" name="province" id="province">
+            <option></option>
+        </select>
+        <select class="select" name="city" id="city">
+            <option></option>
+        </select> 
+    </li> 
+    <li><span class="warning">*</span>性别</li>
+    <li>
+        <select name="sex">
+            <option value='女'>女</option> 
+            <option value='男'>男</option> 
+        </select> 
+    </li> 
+    <li><span class="warning">*</span>昵称</li>
+    <li><input type="text" name="nickname" id="nickname" value="{{g.fan.nickname if g.fan else ''}}"></li>
+    <li><span class="warning">*</span>微信号</li>
+    <li><input type="text" name="wechat" id="wechat" value="{{g.fan.wechat if g.fan else ''}}"></li>
+    <li><span class="warning">*</span>个人二维码描述</li>
+    <textarea name="desc" id="desc" rows="3">{{g.fan.desc.strip() if g.fan else ''}}</textarea>
+    <li>群二维码介绍(可选项)</li> 
+    <textarea name="qun_desc" id="qun_desc" rows="3">{{g.fan.qun_desc.strip() if g.fan else ''}}</textarea>
+    </ul>
+  </div>
+  <a href="#" onclick="submitPreCheck();return  false" class="btn rc bg-color-green" style="color:#fff">立即更新</a>
+</form>
+</div>
+<div style="display:none">
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1255679456'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1255679456' type='text/javascript'%3E%3C/script%3E"));</script>
+</div> 
+</body>
+</html> 
+<script src="/static/js/jquery-1.9.1.min.js"></script>
+<script src="/static/js/vendor/jquery.ui.widget.js"></script>
+<script src="/static/js/jquery.iframe-transport.js"></script>
+<script src="/static/js/jquery.fileupload.js"></script>
+<script src="/static/js/area.js"></script>
+<script>
+
+$(function() {
+    setup();preselect('省份');promptinfo();
+    //声明_czc对象:
+    var _czc = _czc || [];
+    _czc.push(["_trackEvent", "用户", "操作", "更新二维码"]); 
+});
+
+function submitPreCheck() {
+    if($("#photo_url").val() == ''){
+        alert("请上传您的头像");
+        return ;
+    }
+
+    if($("#qrimg_url").val() == ''){
+        alert("请上传您的微信二维码");
+        return ;
+    }
+
+    if($("#province").val() == "省份"){
+        alert("请选择省份，方便别人联系你");
+        return ; 
+    } 
+
+    if($("#city").val() == "地级市"){
+        alert("请选择地级市，方便别人联系你"); 
+        return ; 
+    } 
+
+    if($("#nickname").val() == ''){
+        alert("请输入您的昵称");
+        return;
+    }
+
+    if($("#wechat").val() == ''){
+        alert("请输入您的微信号");
+        return;
+    }
+    if($("#desc").val() == ''){
+        alert("请输入您的个人描述");
+        return;
+    }
+
+    if($("#desc").val().length > 150){
+        alert("对不起！个人描述最多150个字"); 
+        return ; 
+    }
+
+    $.post("{{url_for('ucenter.upload')}}", $("#uploadProfile").serialize(), function(res){
+        if(res['ret'] == 0){
+            window.location.href = res['data']['url'];
+        }else{
+            alert(res['error']);
+        }
+    });
+}
+
+$("#headfile").fileupload({
+    formData: {image_type: "head"},
+    dataType: 'json',
+    done: function(e, data){
+        var res = data.result;
+        if(res.ret == 0){
+            $("#head_input_div").css("display", "none");
+            var img_url = res.data.url;
+            $("#head_display_div img").attr("src", img_url);
+            $("#head_display_div").css("display", "block");
+
+            /***将得到的URL copy 到photo_url ***/
+            $("#photo_url").val(img_url);
+        }else{
+           alert(res.error);
+        }
+    },
+    progressall: function(e, data){
+        var progress = parseInt(data.loaded / data.total * 100, 10);
+        $("#progressbar-head .bar").css('width', progress + '%');
+        $("#progressbar-head .bar span").html(progress + '%');
+    }
+});
+
+$("#head_display_div a").click(function(e){
+    $("#head_input_div").css("display", "block");
+    $("#head_display_div").css("display", "none");
+
+    /***修改进度条为0***/
+     $("#progressbar-head .bar").css('width', '0%');
+     $("#photo_url").val('');
+});
+
+$("#qrfile").fileupload({
+    formData: {image_type: "qr"},
+    dataType: 'json',
+    done: function(e, data){
+        var res = data.result;
+        if(res.ret == 0){
+            $("#qr_input_div").css("display", "none");
+            var img_url = res.data.url;
+            $("#qr_display_div img").attr("src", img_url);
+            $("#qr_display_div").css("display", "block");
+
+            $("#qrimg_url").val(img_url);
+        }else{
+           alert(res.error);
+           $("#progressbar-qr .bar").css('width', '0%'); 
+        }
+    },
+    progressall: function(e, data){
+        var progress = parseInt(data.loaded / data.total * 100, 10);
+        $("#progressbar-qr .bar").css('width', progress + '%');
+        $("#progressbar-qr .bar span").html(progress + '%');
+    }
+})
+
+$("#qr_display_div a").click(function(e){
+    $("#qr_input_div").css("display", "block");
+    $("#qr_display_div").css("display", "none");
+
+    /***修改进度条为0***/
+    $("#progressbar-qr .bar").css('width', '0%');
+    $("#qrimg_url").val('');
+});
+
+$("#qunfile").fileupload({
+    formData: {image_type: "qun"},
+    dataType: "json", 
+    done: function(e, data){
+        var res = data.result;
+        if(res.ret == 0){
+            $("#qun_input_div").css("display", "none");
+            var img_url = res.data.url;
+            $("#qun_display_div img").attr("src", img_url);
+            $("#qun_display_div").css("display", "block");
+
+            $("#qunimg_url").val(img_url);  
+        }else{
+            alert(res.error);
+            $("#progressbar-qun .bar").css('width', '0%');
+        }
+    }, 
+    progressall: function(e, data){
+        var progress = parseInt(data.loaded / data.total * 100, 10);
+        $("#progressbar-qun .bar").css('width', progress + '%');
+        $("#progressbar-qun .bar span").html(progress + '%');
+    }
+})
+
+$("#qun_display_div a").click(function(e){
+    $("#qun_input_div").css("display", "block");
+    $("#qun_display_div").css("display", "none");
+
+    /***修改进度条为0***/
+    $("#progressbar-qun .bar").css('width', '0%');
+    $("#qunimg_url").val('');
+}); 
+
+{% if g.fan %}
+    $("#head_input_div").css("display", "none");
+    var head_url = "{{g.fan.photo_url}}"; 
+    $("#head_display_div img").attr("src", head_url);
+    $("#head_display_div").css("display", "block");
+
+    /***将得到的URL copy 到photo_url ***/
+    $("#photo_url").val(head_url);
+
+    $("#qr_input_div").css("display", "none");
+    var qr_url = "{{g.fan.qrimg_url}}";  
+    $("#qr_display_div img").attr("src", qr_url);
+    $("#qr_display_div").css("display", "block");
+
+    $("#qrimg_url").val(qr_url);
+
+    /***群微信二维码***/ 
+    {% if g.fan.qunimg_url %} 
+        $("#qun_input_div").css("display", "none");
+        var qun_url = "{{g.fan.qunimg_url}}";
+        $("#qun_display_div img").attr("src", qun_url);
+        $("#qun_display_div").css("display", "block"); 
+
+        $("#qunimg_url").val(qun_url); 
+    {% endif %} 
+{% endif %} 
+
+</script>

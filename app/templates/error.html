@@ -1,0 +1,17 @@
+{% extends 'page.html' %}
+{% block head_title %}权限不够{% endblock %} 
+{% block page_content %}
+<div class="header">
+   <a href="javascript:window.history.go(-1)"><span class="header-left">返回</span></a> 
+   <h1>权限不够</h1>
+</div>
+<div class="g-error">
+    <p>{{g.error}}</p> 
+    <div class="buy-vip">
+        <a href="{{url_for('shop.buy')}}">点击购买VIP</a><br /><br />  
+        <a href="{{url_for('m.list')}}">点击进入【粉丝人脉】</a>
+    </div>  
+</div> 
+{% endblock %} 
+{% block page_footer %}
+{% endblock %} 

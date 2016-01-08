@@ -1,0 +1,98 @@
+{% extends 'page.html' %} 
+{% block head_meta %} 
+    {{ super() }} 
+    <link rel="stylesheet" href="{{url_for('static', filename='css/all.css')}}" />    
+{% endblock %} 
+{% block page_content %} 
+<div class="header">
+   <a href="javascript:window.history.go(-1)"><span class="header-left">返回</span></a> 
+   <h1>我的订单</h1>
+</div>
+<div class="ucenter-wallet"> 
+    <div class="u-info">
+        <div class="headimg">
+            <img src="{{g.user.headimgurl}}" />
+        </div> 
+        <ul> 
+            <li>昵称: <span class="i-txt">{{g.user}}</span></li> 
+            <li>用户身份: <span class="i-txt">{% if g.user.isVip() %}VIP用户{% else %}非VIP用户{% endif %}</span> 
+                {% if not g.user.isVip() %} 
+                    <a class="font-color-blue" href="{{url_for('shop.buy')}}">点击购买VIP，赢取更多粉丝</a> 
+                {% endif %} 
+            </li> 
+            <li> 
+                {% if g.user.isVip() %}
+                    VIP到期: <span class="i-txt">{{ g.user.vip_deadline.strftime('%Y-%m-%d %X') }}</span> 
+                {% endif %}
+            </li> 
+        </ul> 
+    </div>
+
+    <div class="u-data"> 
+            <ul>
+                <li>未提现积分: ${{g.user.getWithCommission()}}</li>
+                <li>已提现积分: ${{g.user.getCommission()}}</li>  
+            </ul>
+    </div> 
+    <form id="walletForm">
+        <div>
+            积分余额: <input type="text" name="fee" id="fee" value="{{g.user.getWithCommissionSafe()}}" /> 
+            <a href="#" onclick="submitPreCheck();return  false" class="btn rc bg-color-green" style="height:3em;color:#fff;margin-top:1em" id="">提交申请</a>  
+        </div> 
+    </form>
+    <hr /> 
+    <div class="commission-list">
+        <ul class="title">
+            <li>提交时间</li> 
+            <li>金额</li> 
+            <li>状态</li> 
+        </ul> 
+        <div>
+        <ul class="list">
+            {% for i in g.m_list %}
+            <li class="o-li"> 
+                <ul class="i-ul"> 
+                <li>{{i.add_time.strftime('%Y-%m-%d')}}</li> 
+                <li>{{i.number}}</li> 
+                {% if i.isSent() %}  
+                <li><span class="font-color-green">{{i.getStatusName()}}</span></li> 
+                {% else %} 
+                <li><span class="warning">{{i.getStatusName()}}</span></li> 
+                {% endif %} 
+                </ul> 
+            </li> 
+            {% endfor %} 
+        </ul> 
+        </div> 
+    </div> 
+</div> 
+{% endblock %} 
+{% block page_footer %} 
+{% endblock %} 
+{% block tail %}
+    {{ super() }}  
+<script>
+function submitPreCheck() {
+    var fee = parseFloat( $("#fee").val() );     
+    if( fee <= 0 ){
+        alert("对不起！您提取的金额必须大于0哟. 如有疑问请联系客服!"); 
+        return false; 
+    }   
+
+    if( fee < 1 ){
+        alert("对不起，由于微信最少提取1元，所以你的提取金额必须大于1元(包含1元)");
+        return false; 
+    }
+    $.post("{{url_for("ucenter.wallet")}}", $("#walletForm").serialize(), function(res){
+        res = $.parseJSON(res); 
+        if(res['ret'] != 0){
+                alert(res['error'] + "(" + res['ret'] + ")"); 
+                return ; 
+        }else{
+            alert("提取成功，款项将在24小时内发放，请关注微信通知!"); 
+            window.location.reload(); 
+        }
+    }); 
+} 
+</script> 
+{% endblock %} 

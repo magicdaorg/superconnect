@@ -1,0 +1,11 @@
+<div class="follower">
+    <p>长按二维码关注</p>
+    <p>警告：加人备注"疯狂人脉说",通过率高哟</p>
+    <div class="qr-img">
+        {% if g.qr_type == 'personal' %}
+        <img src="{{g.follower_user.qrimg_url}}" />
+        {% else %}
+        <img src="{{g.follower_user.qunimg_url}}" />
+        {% endif %} 
+    </div>
+</div>
